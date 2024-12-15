@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            color: white;
+            background-color: #495057;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .btn:hover {
+            background-color: #007bff;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+
+        /* Styling links */
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Sidebar active link styling */
+        .sidebar .btn.active {
+            background-color: #007bff;
+        }
+
+        .sidebar .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .sidebar .btn-danger:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Student Dashboard</h2>
+    <a href="/student/dashboard" class="btn btn-light">My Dashboard</a>
+    <a href="/student/profile" class="btn btn-light">My Profile</a>
+    <a href="/student/profile/update-password" class="btn btn-light">Update Password</a>
+    <a href="/student/documents" class="btn btn-light">My Documents</a>
+    <a href="/student/project" class="btn btn-light">My Projects</a>
+    <a href="/student/education" class="btn btn-light">My Education</a>
+    <a href="/student/employment" class="btn btn-light">My Industry Experience</a>
+    <a href="/student/courses" class="btn btn-light">View University Courses</a>
+    <a href="/student/jobs" class="btn btn-light">View Jobs</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+</body>
+</html>

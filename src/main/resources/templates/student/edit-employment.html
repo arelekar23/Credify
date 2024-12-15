@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/studentSidebar}"></div>
+<div class="content">
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Employment</h1>
+
+        <form th:action="@{/student/employment/update}" th:object="${employment}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <!-- Employer Dropdown -->
+            <div class="mb-3">
+                <label for="employer" class="form-label">Employer</label>
+                <select id="employer" name="employer" class="form-control" th:field="*{user.id}" required>
+                    <option value="" disabled selected>Select Employer</option>
+                    <option th:each="employer : ${employers}" th:value="${employer.id}"
+                            th:selected="${employer.id == employment.employer.id}" th:text="${employer.name}"></option>
+                </select>
+            </div>
+
+            <!-- Job Role Dropdown -->
+            <div class="mb-3">
+                <label for="jobRole" class="form-label">Job Role</label>
+                <select id="jobRole" name="jobRole" class="form-control" th:field="*{position.id}" required>
+                    <option value="" disabled selected>Select Job Role</option>
+                    <option th:each="jobRole : ${jobRoles}" th:value="${jobRole.id}"
+                            th:selected="${jobRole.id == employment.position.id}" th:text="${jobRole.name}"></option>
+                </select>
+            </div>
+
+            <!-- Employment Start Month -->
+            <div class="mb-3">
+                <label for="startMonth" class="form-label">Start Month</label>
+                <select class="form-control" id="startMonth" th:field="*{startMonth}" required>
+                    <option value="" disabled selected>Select Month</option>
+                    <option th:value="1" th:selected="${employment.startMonth == 1}">January</option>
+                    <option th:value="2" th:selected="${employment.startMonth == 2}">February</option>
+                    <option th:value="3" th:selected="${employment.startMonth == 3}">March</option>
+                    <option th:value="4" th:selected="${employment.startMonth == 4}">April</option>
+                    <option th:value="5" th:selected="${employment.startMonth == 5}">May</option>
+                    <option th:value="6" th:selected="${employment.startMonth == 6}">June</option>
+                    <option th:value="7" th:selected="${employment.startMonth == 7}">July</option>
+                    <option th:value="8" th:selected="${employment.startMonth == 8}">August</option>
+                    <option th:value="9" th:selected="${employment.startMonth == 9}">September</option>
+                    <option th:value="10" th:selected="${employment.startMonth == 10}">October</option>
+                    <option th:value="11" th:selected="${employment.startMonth == 11}">November</option>
+                    <option th:value="12" th:selected="${employment.startMonth == 12}">December</option>
+                </select>
+            </div>
+
+            <!-- Employment Start Year -->
+            <div class="mb-3">
+                <label for="startYear" class="form-label">Start Year</label>
+                <input type="number" class="form-control" id="startYear" th:field="*{startYear}"
+                       placeholder="Enter start year" required>
+            </div>
+
+            <!-- Employment End Month -->
+            <div class="mb-3">
+                <label for="endMonth" class="form-label">End Month</label>
+                <select class="form-control" id="endMonth" th:field="*{endMonth}">
+                    <option value="" disabled selected>Select Month</option>
+                    <option th:value="1" th:selected="${employment.endMonth == 1}">January</option>
+                    <option th:value="2" th:selected="${employment.endMonth == 2}">February</option>
+                    <option th:value="3" th:selected="${employment.endMonth == 3}">March</option>
+                    <option th:value="4" th:selected="${employment.endMonth == 4}">April</option>
+                    <option th:value="5" th:selected="${employment.endMonth == 5}">May</option>
+                    <option th:value="6" th:selected="${employment.endMonth == 6}">June</option>
+                    <option th:value="7" th:selected="${employment.endMonth == 7}">July</option>
+                    <option th:value="8" th:selected="${employment.endMonth == 8}">August</option>
+                    <option th:value="9" th:selected="${employment.endMonth == 9}">September</option>
+                    <option th:value="10" th:selected="${employment.endMonth == 10}">October</option>
+                    <option th:value="11" th:selected="${employment.endMonth == 11}">November</option>
+                    <option th:value="12" th:selected="${employment.endMonth == 12}">December</option>
+                </select>
+            </div>
+
+            <!-- Employment End Year -->
+            <div class="mb-3">
+                <label for="endYear" class="form-label">End Year</label>
+                <input type="number" class="form-control" id="endYear" th:field="*{endYear}"
+                       placeholder="Enter end year">
+            </div>
+
+            <!-- Job Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" th:field="*{description}"
+                          placeholder="Enter job description"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a href="/student/employment" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // Fetch Employers
+        const fetchEmployers = () => {
+            $.ajax({
+                url: '/api/employer/list',
+                method: 'GET',
+                success: function (data) {
+                    const employerDropdown = $("#employer");
+                    employerDropdown.empty();
+                    employerDropdown.append('<option value="" disabled selected>Select Employer</option>');
+                    data.forEach(function (employer) {
+                        employerDropdown.append(`<option value="${employer.id}">${employer.name}</option>`);
+                    });
+                },
+                error: function () {
+                    alert("Failed to fetch employers.");
+                }
+            });
+        };
+
+        fetchEmployers();
+
+        // Fetch Job Roles when Employer is selected
+        $("#employer").on("change", function () {
+            const selectedEmployer = $(this).val();
+
+            if (selectedEmployer) {
+                $.ajax({
+                    url: `/api/employer/jobroles/${selectedEmployer}`,
+                    method: 'GET',
+                    success: function (data) {
+                        const jobRoleDropdown = $("#jobRole");
+                        jobRoleDropdown.empty();
+                        jobRoleDropdown.append('<option value="" disabled selected>Select Job Role</option>');
+                        data.forEach(function (jobRole) {
+                            jobRoleDropdown.append(`<option value="${jobRole.id}">${jobRole.name}</option>`);
+                        });
+                    },
+                    error: function () {
+                        alert("Failed to fetch job roles.");
+                    }
+                });
+            } else {
+                const jobRoleDropdown = $("#jobRole");
+                jobRoleDropdown.empty();
+                jobRoleDropdown.append('<option value="" disabled selected>Select Job Role</option>');
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/studentProfile.js"></script>
+    <style>
+        .content {
+            margin-left: 250px; /* Sidebar width */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/studentSidebar}"></div>
+
+<div class="content">
+    <div class="container mt-5">
+        <h1 class="mb-4 font-weight-bold">My Profile</h1>
+        <form th:object="${person}" th:action="@{/student/profile/update}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" class="form-control" th:field="*{firstName}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" class="form-control" th:field="*{lastName}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" class="form-control" th:field="*{emailAddress}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" class="form-control" th:field="*{mobileNumber}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" class="form-control" th:disabled="disabled" th:field="*{gender}">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" class="form-control" th:field="*{age}" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" class="form-control" th:field="*{country}" readonly />
+            </div>
+
+            <div class="form-group">
+                <button type="button" id="editButton" class="btn btn-primary">Edit</button>
+                <button type="submit" id="saveButton" class="btn btn-success d-none">Save</button>
+                <button type="button" id="cancelButton" class="btn btn-danger d-none">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

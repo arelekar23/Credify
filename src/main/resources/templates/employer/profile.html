@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Admin Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/employerSidebar}"></div>
+<div class="content">
+    <div class="container mt-5">
+        <h1 class="mb-4 font-weight-bold">Employer Admin Profile</h1>
+
+        <form th:action="@{/employer/profile/update}" method="post">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" class="form-control" th:field="*{person.firstName}" readonly/>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" class="form-control" th:field="*{person.lastName}" readonly/>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" class="form-control" th:field="*{person.emailAddress}" readonly/>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="form-group">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" id="mobile" class="form-control" th:field="*{person.mobileNumber}" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" class="form-control" th:field="*{person.gender}" disabled>
+                    <option value=""></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <!-- Age -->
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" class="form-control" th:field="*{person.age}" readonly/>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" class="form-control" th:field="*{person.country}" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label for="employerName">Employer Name:</label>
+                <input type="text" id="employerName" class="form-control" th:field="*{employer.name}" readonly/>
+            </div>
+
+            <div class="form-group">
+                <label for="employerCountry">Employer Country:</label>
+                <input type="text" id="employerCountry" class="form-control" th:field="*{employer.country}" readonly/>
+            </div>
+
+            <!-- Edit Button -->
+            <div class="form-group">
+                <button type="button" id="editButton" class="btn btn-primary">Edit</button>
+                <button type="submit" id="saveButton" class="btn btn-success d-none">Save</button>
+                <button type="button" id="cancelButton" class="btn btn-danger d-none">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editButton = document.getElementById("editButton");
+        const saveButton = document.getElementById("saveButton");
+        const cancelButton = document.getElementById("cancelButton");
+        const inputs = document.querySelectorAll("input");
+        editButton.addEventListener("click", () => {
+            inputs.forEach(input => {
+                input.removeAttribute("readonly");
+            });
+            document.querySelectorAll("select").forEach(select => {
+                select.removeAttribute("disabled");
+            });
+
+            editButton.classList.add("d-none");
+            saveButton.classList.remove("d-none");
+            cancelButton.classList.remove("d-none");
+        });
+
+        cancelButton.addEventListener("click", () => {
+            inputs.forEach(input => input.setAttribute("readonly", "readonly"));
+            editButton.classList.remove("d-none");
+            saveButton.classList.add("d-none");
+            cancelButton.classList.add("d-none");
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recruiter Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+ <div th:replace="~{fragments/recruiterSidebar}"></div>
+    <div class="content">
+        <div class="container">
+            <h2 class="my-5 font-weight-bold" th:text="'Welcome, ' + ${user.person.firstName} + ' ' + ${user.person.lastName}"> </h2>
+            <p>Choose an option from the sidebar to get started.</p>
+        </div>
+    </div>
+
+</body>
+</html>
